@@ -8,6 +8,59 @@
     <body>
         <script>
             console.log("hello,world!")
+            function getComputerChoice(){
+                let random=Math.random();
+                if (random < 0.33){
+                    return "rock";
+                } else if ( random <= 0.66){
+                    return "paper";
+                } else {
+                    return "scissors";
+                }
+            }
+            function getHumanChoice(){
+                return prompt("请输入你的选择。","") 
+            }
+            let humanScore = 0;
+            let computerScore = 0;
+            
+            function playRound(humanChoice, computerChoice){
+                humanChoice = humanChoice.toLowerCase();
+                
+                if (humanChoice ==="rock" && computerChoice ==="paper" ) {
+                    computerScore++;
+                    console.log("你输了！石头被布打败了。")
+                }  else if (humanChoice ==="paper" && computerChoice ==="scissors" ) {
+                    computerScore++;
+                    console.log("你输了！布被剪刀打败了。")}
+                    else if (humanChoice ==="scissors" && computerChoice ==="rock" ) {
+                        computerScore++;
+                        console.log("你输了！剪刀被石头打败了。")
+                    }
+                    else if (humanChoice ==="scissors"&&computerChoice ==="paper" ||
+                    humanChoice ==="paper"&& computerChoice==="rock"||
+                    humanChoice ==="rock"&&computerChoice==="scissors") {
+                        humanScore++;
+                        console.log("你赢了！")
+                    }
+                    else {
+                        console.log("平手！")
+                    }
+
+            }
+            function playGame(){
+
+                humanScore = 0;
+                computerScore = 0;
+
+                for (let i = 1; i <= 5; i++) {
+                    playRound(getHumanChoice(), getComputerChoice());
+                    }
+                console.log(`玩家:${humanScore} 电脑:${computerScore}`);
+}
+            
+
+
         </script>
     </body>
 </html>
