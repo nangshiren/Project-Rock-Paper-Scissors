@@ -1,66 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width initial-scale=1.0">
-        <title>Project zero</title>
-    </head>
-    <body>
-        <script>
-            console.log("hello,world!")
-            function getComputerChoice(){
-                let random=Math.random();
-                if (random < 0.33){
-                    return "rock";
-                } else if ( random <= 0.66){
-                    return "paper";
-                } else {
-                    return "scissors";
-                }
-            }
-            function getHumanChoice(){
-                return prompt("请输入你的选择。","") 
-            }
-            let humanScore = 0;
-            let computerScore = 0;
-            
-            function playRound(humanChoice, computerChoice){
-                humanChoice = humanChoice.toLowerCase();
-                
-                if (humanChoice ==="rock" && computerChoice ==="paper" ) {
-                    computerScore++;
-                    console.log("你输了！石头被布打败了。")
-                }  else if (humanChoice ==="paper" && computerChoice ==="scissors" ) {
-                    computerScore++;
-                    console.log("你输了！布被剪刀打败了。")}
-                    else if (humanChoice ==="scissors" && computerChoice ==="rock" ) {
-                        computerScore++;
-                        console.log("你输了！剪刀被石头打败了。")
-                    }
-                    else if (humanChoice ==="scissors"&&computerChoice ==="paper" ||
-                    humanChoice ==="paper"&& computerChoice==="rock"||
-                    humanChoice ==="rock"&&computerChoice==="scissors") {
-                        humanScore++;
-                        console.log("你赢了！")
-                    }
-                    else {
-                        console.log("平手！")
-                    }
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+</head>
 
-            }
-            function playGame(){
+<body>
 
-                humanScore = 0;
-                computerScore = 0;
+<script>
 
-                for (let i = 1; i <= 5; i++) {
-                    playRound(getHumanChoice(), getComputerChoice());
-                    }
-                console.log(`玩家:${humanScore} 电脑:${computerScore}`);
+function getComputerChoice(){
+
+    let random = Math.random();
+
+    if(random < 0.33){
+        return "rock";
+    } 
+    else if(random <= 0.66){
+        return "paper";
+    } 
+    else {
+        return "scissors";
+    }
 }
-            
 
 
-        </script>
-    </body>
+let humanScore = 0;
+let computerScore = 0;
+
+
+function playRound(humanChoice, computerChoice){
+
+    if(
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper")
+    ){
+        humanScore++;
+        result.textContent = `你赢了这一局！电脑出了 ${computerChoice}`;
+
+    } 
+    else if(humanChoice === computerChoice){
+
+        result.textContent = `平局！双方都是 ${humanChoice}`;
+
+    }
+    else{
+
+        computerScore++;
+        result.textContent = `你输了这一局！电脑出了 ${computerChoice}`;
+
+    }
+
+
+    score.textContent = 
+        `玩家:${humanScore} 电脑:${computerScore}`;
+
+
+    if(humanScore === 5){
+
+        result.textContent = "恭喜，你赢了游戏！";
+
+        disableButtons();
+
+    }
+
+
+    if(computerScore === 5){
+
+        result.textContent = "电脑赢了游戏！";
+
+        disableButtons();
+
+    }
+
+}
+
+
+
+
+// 创建 DOM
+
+const body = document.querySelector("body");
+
+
+const div = document.createElement("div");
+
+
+const butP = document.createElement("button");
+butP.textContent = "paper";
+
+
+const butR = document.createElement("button");
+butR.textContent = "rock";
+
+
+const butS = document.createElement("button");
+butS.textContent = "scissors";
+
+
+const score = document.createElement("p");
+score.textContent = `玩家:${humanScore} 电脑:${computerScore}`;
+
+
+const result = document.createElement("p");
+
+
+
+div.appendChild(butP);
+div.appendChild(butR);
+div.appendChild(butS);
+
+div.appendChild(score);
+div.appendChild(result);
+
+
+body.appendChild(div);
+
+
+
+// 事件
+
+div.addEventListener("click", playGame);
+
+
+
+function playGame(e){
+
+    if(e.target.tagName !== "BUTTON"){
+        return;
+    }
+
+
+    let humanChoice = e.target.textContent;
+
+
+    playRound(
+        humanChoice,
+        getComputerChoice()
+    );
+
+}
+
+
+
+
+function disableButtons(){
+
+    butP.disabled = true;
+    butR.disabled = true;
+    butS.disabled = true;
+
+}
+
+
+</script>
+
+</body>
 </html>
